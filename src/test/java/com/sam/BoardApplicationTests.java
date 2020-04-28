@@ -43,12 +43,12 @@ class BoardApplicationTests {
     }
 
     //xml自定义查询测试 用到查询构建器
-    @Test
-    void xmlSelectCustomTest() {
-        QueryWrapper<User> wrapper = new QueryWrapper<>();
-        wrapper.lambda().ge(User::getAge,22).likeLeft(User::getEmail,"com");
-        userMapper.getCustomUserListXml(wrapper).forEach(System.out::println);
-    }
+//    @Test
+//    void xmlSelectCustomTest() {
+//        QueryWrapper<User> wrapper = new QueryWrapper<>();
+//        wrapper.lambda().ge(User::getAge,22).likeLeft(User::getEmail,"com");
+//        userMapper.getCustomUserListXml(wrapper).forEach(System.out::println);
+//    }
 
 
     //注解方式自定义查询测试

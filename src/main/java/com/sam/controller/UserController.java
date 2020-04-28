@@ -1,20 +1,27 @@
 package com.sam.controller;
 
 import com.sam.entity.User;
+import com.sam.service.UserService;
+import com.sam.service.impl.UserServiceImpl;
+import com.sam.service.model.UserModel;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.Map;
 
-@RestController
-@RequestMapping("/validate")
+@Controller("user")
+@RequestMapping("/user")
 public class UserController {
+
+    @Resource
+    private UserService userService;
+
     @GetMapping("/add")
-    public Long addUser(@Validated User user){
-        user.setId(15L);
+    public Integer addUser(@Validated User user){
+        user.setId(15);
         return user.getId();
     }
 
@@ -23,5 +30,15 @@ public class UserController {
     //
     //    retu
     //}
+
+    @RequestMapping("/get")
+    @ResponseBody
+    public UserModel getUser(@RequestParam(name = "id") Integer id){
+        //调用service层获取对应id的用户对象并返回给前端
+        return userService.getUserById(id);
+
+
+
+    }
 
 }

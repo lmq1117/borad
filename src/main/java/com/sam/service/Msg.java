@@ -26,7 +26,7 @@ public class Msg {
 
     public ResponseEntity<Map<String, Object>> successMsg(String msg) {
         Map<String, Object> data = new HashMap<>();
-        return errorMsg(msg, data);
+        return successMsg(msg, data);
     }
 
 

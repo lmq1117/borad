@@ -19,13 +19,13 @@ import javax.annotation.Resource;
 @RunWith(SpringRunner.class)
 class BoardApplicationTests {
 
-    @Resource
+    @Autowired(required = false)
     UserMapper userMapper;
 
     @Test
     void contextLoads() {
         QueryWrapper<User> wrapper = new QueryWrapper<>();
-        wrapper.likeRight("name","J");
+        wrapper.likeRight("name","刘");
         userMapper.selectList(wrapper).forEach(System.out::println);
     }
 

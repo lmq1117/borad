@@ -8,14 +8,19 @@ import com.sam.error.EmBusinessError;
 import com.sam.response.CommonReturnType;
 import com.sam.service.UserService;
 import com.sam.service.model.UserModel;
+import com.sam.validator.LoginForm;
 import org.springframework.beans.BeanUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -63,6 +68,23 @@ public class UserController extends BaseController {
         map.put("str",Joiner.on(",").join(Arrays.asList(1,5,7,8,7,9)));
         return CommonReturnType.create(map);
 
+    }
+
+
+    @PostMapping("/login")
+    @ResponseBody
+    public CommonReturnType login(@Valid LoginForm loginForm, BindingResult bindingResult) throws BusinessException {
+        if(bindingResult.hasFieldErrors()){
+            List<FieldError> fieldErrors = bindingResult.getFieldErrors();
+            fieldErrors.forEach(fieldError -> {
+                System.out.println(fieldError);
+            });
+            throw new BusinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR);
+        }
+        Map<String,Object> map = new HashMap<>();
+        map.put("name",loginForm.getName());
+        map.put("password",loginForm.getPassword());
+        return CommonReturnType.create(map);
     }
 
 

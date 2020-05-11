@@ -25,13 +25,30 @@ public class UserServiceImpl implements UserService {
     public UserModel getUserById(Integer id) {
         //调用mapper获取到对应id的dataObject
         User user = userMapper.selectById(id);
-        if(user == null) {
+        if (user == null) {
             return null;
         }
         QueryWrapper<UserPassword> userPasswordQueryWrapper = new QueryWrapper<>();
-        userPasswordQueryWrapper.lambda().eq(UserPassword::getUserId,id);
+        userPasswordQueryWrapper.lambda().eq(UserPassword::getUserId, id);
         UserPassword userPassword = (UserPassword) userPasswordMapper.selectOne(userPasswordQueryWrapper);
-        return convertFromUserEntity(user,userPassword);
+        return convertFromUserEntity(user, userPassword);
+    }
+
+    @Override
+    public Integer getLastUserId() {
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        wrapper.orderByDesc("id").last("limit 0,1");
+        User user = userMapper.selectOne(wrapper);
+        if (user == null) {
+            return 1;
+        } else {
+            return user.getId();
+        }
+    }
+
+
+    public Integer insert(User user) {
+        return userMapper.insert(user);
     }
 
     private UserModel convertFromUserEntity(User user, UserPassword userPassword) {
@@ -45,4 +62,6 @@ public class UserServiceImpl implements UserService {
         }
         return userModel;
     }
+
+
 }

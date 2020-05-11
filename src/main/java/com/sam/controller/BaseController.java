@@ -3,6 +3,8 @@ package com.sam.controller;
 import com.sam.error.BusinessException;
 import com.sam.error.EmBusinessError;
 import com.sam.response.CommonReturnType;
+import com.sam.service.Msg;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -13,6 +15,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BaseController {
+
+    @Autowired
+    protected Msg msg;
 
     //定义exceptionHandler解决未被controller曾吸收的exception
     @ExceptionHandler(Exception.class)

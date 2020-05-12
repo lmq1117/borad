@@ -1,6 +1,7 @@
 package com.sam.controller;
 
 import com.google.common.base.Joiner;
+import com.sam.controller.req.ReqUser;
 import com.sam.controller.viewobject.UserVO;
 import com.sam.entity.User;
 import com.sam.error.BusinessException;
@@ -8,6 +9,7 @@ import com.sam.error.EmBusinessError;
 import com.sam.response.CommonReturnType;
 import com.sam.service.UserService;
 import com.sam.service.model.UserModel;
+import com.sam.validator.GetParamForm;
 import com.sam.validator.LoginForm;
 import org.springframework.beans.BeanUtils;
 import org.springframework.validation.BindingResult;
@@ -91,6 +93,43 @@ public class UserController extends BaseController {
         Map<String,Object> map = new HashMap<>();
         map.put("name",loginForm.getName());
         map.put("password",loginForm.getPassword());
+        return CommonReturnType.create(map);
+    }
+
+    @GetMapping("/pg")
+    @ResponseBody
+    public CommonReturnType getUser(@Valid GetParamForm paramForm,BindingResult bindingResult) throws BusinessException {
+
+
+        if(bindingResult.hasFieldErrors()){
+            List<FieldError> fieldErrors = bindingResult.getFieldErrors();
+            StringBuilder stringBuffer = new StringBuilder("");
+            fieldErrors.forEach(fieldError -> {
+                if (stringBuffer.length() == 0) {
+                    stringBuffer.append("====" + fieldError.getField() + "====" + fieldError.getDefaultMessage());
+                } else {
+                    stringBuffer.append("," + "====" + fieldError.getField() + "====" + fieldError.getDefaultMessage());
+                }
+                System.out.println("===="+fieldError.getField()+"===="+fieldError.getDefaultMessage());
+            });
+            System.out.println(stringBuffer);
+            throw new BusinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR.setErrorMessage(stringBuffer.toString()));
+        }
+        Map<String,Object> map = new HashMap<>();
+        map.put("name",paramForm.getUserId());
+        map.put("password",paramForm.getAge());
+        return CommonReturnType.create(map);
+    }
+
+
+    @PostMapping("/add")
+    public CommonReturnType addUser(@RequestBody @Valid ReqUser reqUser){
+
+
+        Map<String,Object> map = new HashMap<>();
+        map.put("name",reqUser.getName());
+        map.put("age",reqUser.getAge());
+        //map.put("phone",reqUser.getPhone());
         return CommonReturnType.create(map);
     }
 

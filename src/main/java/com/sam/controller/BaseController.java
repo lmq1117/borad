@@ -36,4 +36,9 @@ public class BaseController {
         return CommonReturnType.create(responseData, "fail");
     }
 
+
+    //protected void validate(){
+    //
+    //}
+
 }

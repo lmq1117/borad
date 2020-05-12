@@ -1,10 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>admin.member.list</title>
 </head>
 <body>
-    <h1>admin.member.list</h1>
+<h1>admin.member.list</h1>
+<table border="1">
+    <tr>
+        <td id="abc">编号</td>
+        <td>用户名</td>
+        <td>年龄</td>
+        <td>test hot update 2</td>
+    </tr>
+    <tr th:each="user:${users}">
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.name}"></td>
+        <td th:text="${user.age}"></td>
+        <td>test hot update</td>
+    </tr>
+
+</table>
+<script th:inline="javascript">
+    let username = [[${username}]];
+    let username2 = [[${username}]];
+    console.log(username)
+    document.querySelector("#abc").addEventListener("click",function () {
+        console.log("你点击了编号")
+    })
+</script>
 </body>
 </html>

@@ -51,6 +51,7 @@ public class MemberController extends BaseController {
         }
 
         model.addAttribute("users",users);
+        model.addAttribute("username","李柳柳");
         //return "admin/member/list";
         return "/admin/member/list";
 

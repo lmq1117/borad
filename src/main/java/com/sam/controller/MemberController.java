@@ -3,6 +3,7 @@ package com.sam.controller;
 
 import com.sam.dao.UserMapper;
 import com.sam.entity.User;
+import com.sam.response.CommonReturnType;
 import com.sam.service.Msg;
 import com.sam.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,14 +11,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 
 @Controller
+@RequestMapping("/member")
 public class MemberController extends BaseController {
 
     @Autowired
@@ -55,5 +61,16 @@ public class MemberController extends BaseController {
         //return "admin/member/list";
         return "/admin/member/list";
 
+    }
+
+    @PostMapping("/add")
+    @ResponseBody
+    public CommonReturnType addMember(){
+        Map<String,Object> map = new HashMap<>();
+        map.put("name","zhangsan");
+        map.put("age",19);
+        //map.put("phone",reqUser.getPhone());
+        return CommonReturnType.create(map);
+        //return "add success";
     }
 }

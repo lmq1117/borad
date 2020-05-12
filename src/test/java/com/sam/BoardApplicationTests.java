@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.sam.config.properties.FileProperties;
 import com.sam.dao.UserMapper;
 import com.sam.entity.User;
 import com.sam.service.UserService;
@@ -15,6 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +29,18 @@ class BoardApplicationTests {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private FileProperties fileProperties;
+
+
+    @Test
+    void fileTest(){
+        System.out.println(fileProperties.getUrl());
+        System.out.println(fileProperties.getUploadDir());
+
+        System.out.println(Paths.get(fileProperties.getUploadDir()).toAbsolutePath().normalize());
+    }
 
     @Test
     void insertTen(){

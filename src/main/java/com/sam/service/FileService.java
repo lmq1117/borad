@@ -30,6 +30,7 @@ public class FileService {
         try {
             Files.createDirectories(this.fileStorageLocation);
         } catch (Exception ex) {
+
             throw new FileException("创建本地文件存储目录失败");
         }
     }
